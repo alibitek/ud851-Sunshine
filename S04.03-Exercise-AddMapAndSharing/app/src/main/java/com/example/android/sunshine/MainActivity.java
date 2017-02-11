@@ -221,8 +221,21 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapterOn
             return true;
         }
 
-        // TODO (2) Launch the map when the map menu item is clicked
+        // COMPLETED (2) Launch the map when the map menu item is clicked
+        if (id == R.id.action_map) {
+            showMap(Uri.parse("geo:0,0?q=" + Uri.encode("Eiffel Tower")));
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showMap(Uri geolocation) {
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW);
+        Log.d(TAG, "GeoLocation: " + geolocation.toString());
+        mapIntent.setData(geolocation);
+        mapIntent.setPackage("com.google.android.apps.maps");
+        if (mapIntent.resolveActivity(getPackageManager()) != null)
+            startActivity(mapIntent);
     }
 }
